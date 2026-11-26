@@ -1,0 +1,571 @@
+@'
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafeCampus — Ruang Aman Kampus</title>
+  <style>
+    :root {
+      --bg: #fdf8f6;
+      --surface: #ffffff;
+      --surface-soft: #faf7ff;
+      --text: #3b354d;
+      --muted: #78718c;
+      --border: #ede6f7;
+      --lavender: #9b87f5;
+      --lavender-dark: #7e69ab;
+      --lavender-soft: #f1ecfe;
+      --peach-soft: #ffedd8;
+      --pink-soft: #fce7f3;
+      --pink-accent: #f472b6;
+      --mint-soft: #dcfce7;
+      --mint-text: #166534;
+      --amber-soft: #fef3c7;
+      --amber-text: #92400e;
+      --sky-soft: #e0f2fe;
+      --sky-text: #075985;
+      --shadow: 0 12px 30px -8px rgba(155, 135, 245, 0.16);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at top left, #f3e8ff 0%, #fdf8f6 45%, #fce7f3 100%);
+      color: var(--text);
+      line-height: 1.55;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    .nav {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .nav-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #c4b5fd, #f9a8d4);
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(196, 181, 253, 0.45);
+    }
+
+    .pill-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: var(--lavender-soft);
+      color: var(--lavender-dark);
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .exit {
+      background: #ffe4e6;
+      color: #be123c;
+      border: 1px solid #fecdd3;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      transition: all 0.15s ease;
+    }
+
+    .exit:hover {
+      background: #fecdd3;
+    }
+
+    /* Container */
+    .wrap {
+      max-width: 860px;
+      width: 100%;
+      margin: 24px auto 48px;
+      padding: 0 16px;
+      flex: 1;
+    }
+
+    /* Hero Pastel */
+    .hero {
+      background: linear-gradient(135deg, #e9d5ff 0%, #fce7f3 55%, #ffedd5 100%);
+      border: 1px solid #f3e8ff;
+      color: var(--text);
+      padding: 28px 24px;
+      border-radius: 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      font-size: clamp(1.35rem, 3vw, 1.8rem);
+      font-weight: 800;
+      color: #3b2f63;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      color: #5b517a;
+      font-size: 0.94rem;
+      max-width: 620px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--border);
+      padding: 6px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      border: 0;
+      background: transparent;
+      padding: 10px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.86rem;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.15s ease;
+    }
+
+    .tab:hover { color: var(--text); }
+
+    .tab.active {
+      background: linear-gradient(135deg, #ede9fe, #fce7f3);
+      color: #4c1d95;
+      box-shadow: 0 2px 8px rgba(155, 135, 245, 0.18);
+    }
+
+    /* Card */
+    .card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    @media (min-width: 640px) {
+      .card { padding: 32px; }
+      .hero { padding: 32px; }
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #3b2f63;
+      margin-bottom: 4px;
+    }
+
+    .card-sub {
+      color: var(--muted);
+      font-size: 0.86rem;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 640px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .anon-card {
+      background: var(--surface-soft);
+      border: 1px dashed #d8b4fe;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .anon-card input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #8b5cf6;
+      cursor: pointer;
+    }
+
+    .field { margin-bottom: 15px; }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #4c4466;
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid #e2d9f3;
+      background: #fcfbff;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text);
+      transition: all 0.15s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #a78bfa;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.18);
+    }
+
+    textarea { min-height: 105px; resize: vertical; }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      color: #ffffff;
+      padding: 13px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.94rem;
+      cursor: pointer;
+      box-shadow: 0 8px 18px -6px rgba(139, 92, 246, 0.45);
+      transition: transform 0.1s ease, opacity 0.15s ease;
+    }
+
+    .btn:hover { opacity: 0.94; }
+    .btn:active { transform: scale(0.99); }
+
+    .box {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+    }
+
+    .success-box {
+      background: var(--mint-soft);
+      border: 1px solid #bbf7d0;
+      color: var(--mint-text);
+      text-align: center;
+    }
+
+    .ticket-pill {
+      display: inline-block;
+      background: #ffffff;
+      border: 1px solid #86efac;
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-family: ui-monospace, monospace;
+      font-weight: 800;
+      font-size: 1rem;
+      margin: 8px 0;
+      color: #14532d;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .b-wait { background: var(--amber-soft); color: var(--amber-text); }
+    .b-proc { background: var(--sky-soft); color: var(--sky-text); }
+    .b-done { background: var(--mint-soft); color: var(--mint-text); }
+
+    .hidden { display: none !important; }
+
+    footer {
+      text-align: center;
+      padding: 18px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo">SC</div>
+        <span>SafeCampus</span>
+        <span class="pill-tag">Satgas PPKPT</span>
+      </div>
+      <a class="exit" href="https://www.google.com">Keluar Cepat</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Ruang Aman Melapor di Kampus</h1>
+      <p>
+        Jangan ragu untuk bersuara. Laporkan tindakan perundungan atau kekerasan di lingkungan kampus secara aman dan rahasia.
+      </p>
+    </section>
+
+    <div class="tabs">
+      <button type="button" class="tab active" id="t-lapor" onclick="setTab('lapor')">Buat Laporan</button>
+      <button type="button" class="tab" id="t-lacak" onclick="setTab('lacak')">Lacak Tiket</button>
+      <button type="button" class="tab" id="t-admin" onclick="setTab('admin')">Panel Satgas</button>
+    </div>
+
+    <!-- Tab 1: Form Laporan -->
+    <section class="card" id="p-lapor">
+      <h2 class="card-title">Formulir Pengaduan Aman</h2>
+      <p class="card-sub">Isi informasi kejadian sesuai fakta. Identitas Anda terlindungi.</p>
+
+      <form id="formLapor">
+        <div class="anon-card">
+          <div>
+            <label for="anonim" style="margin:0; cursor:pointer;">Kirim Sebagai Anonim (Rahasia)</label>
+            <span style="font-size:0.78rem; color:var(--muted);">Nama dan NIM tidak ditampilkan di laporan.</span>
+          </div>
+          <input type="checkbox" id="anonim" onchange="toggleAnon()">
+        </div>
+
+        <div class="grid" id="identitas">
+          <div class="field">
+            <label for="nama">Nama Lengkap / Inisial *</label>
+            <input type="text" id="nama" required placeholder="Contoh: Nabila Putri">
+          </div>
+          <div class="field">
+            <label for="nim">NIM / Status Kampus *</label>
+            <input type="text" id="nim" required placeholder="Contoh: 22041012 / Mahasiswa">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="kontak">Kontak Aman (WhatsApp / Email Alternatif)</label>
+          <input type="text" id="kontak" placeholder="Opsional — diisi jika bersedia dihubungi konselor">
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="kategori">Kategori Kejadian *</label>
+            <select id="kategori" required>
+              <option value="">-- Pilih Kategori --</option>
+              <option>Perundungan (Bullying)</option>
+              <option>Kekerasan Verbal / Siber</option>
+              <option>Kekerasan Fisik</option>
+              <option>Kekerasan Seksual</option>
+              <option>Diskriminasi / Intoleransi</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="tanggal">Tanggal Kejadian *</label>
+            <input type="date" id="tanggal" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="lokasi">Lokasi Kejadian di Kampus *</label>
+          <input type="text" id="lokasi" required placeholder="Contoh: Gedung Fakultas Lt. 2 / Grup Angkatan">
+        </div>
+
+        <div class="field">
+          <label for="kronologi">Kronologi Kejadian *</label>
+          <textarea id="kronologi" required placeholder="Ceritakan detail kejadian, pihak terkait (jika tahu), dan dampaknya..."></textarea>
+        </div>
+
+        <button class="btn" type="submit">Kirim Laporan Secara Aman</button>
+      </form>
+
+      <div class="box success-box hidden" id="hasilKirim"></div>
+    </section>
+
+    <!-- Tab 2: Lacak Tiket -->
+    <section class="card hidden" id="p-lacak">
+      <h2 class="card-title">Lacak Status Pengaduan</h2>
+      <p class="card-sub">Masukkan kode tiket yang Anda peroleh saat mengirim laporan.</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <input type="text" id="cariTiket" placeholder="Contoh: SC-12345" style="flex:1; min-width:180px; font-family:ui-monospace, monospace; text-transform:uppercase;">
+        <button class="btn" type="button" style="width:auto; padding:11px 24px;" onclick="cari()">Cek Status</button>
+      </div>
+      <div class="box hidden" id="hasilCari"></div>
+    </section>
+
+    <!-- Tab 3: Panel Satgas -->
+    <section class="card hidden" id="p-admin">
+      <h2 class="card-title">Dashboard Satgas Kampus</h2>
+      <p class="card-sub">Simulasi pengelolaan laporan masuk dan pembaruan status penanganan.</p>
+      <div id="daftarAdmin"></div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 SafeCampus — Layanan Perlindungan &amp; Pencegahan Kekerasan Lingkungan Kampus.
+  </footer>
+
+  <script>
+    const KEY = "safecampus_pastel_v1";
+    const awal = [{
+      tiket: "SC-12345",
+      pelapor: "Anonim",
+      kontak: "Dirahasiakan",
+      kategori: "Perundungan (Bullying)",
+      tanggal: "2026-11-26",
+      lokasi: "Kantin Pusat Kampus",
+      kronologi: "Contoh laporan awal untuk simulasi pemeriksaan Satgas.",
+      status: "Dalam Investigasi"
+    }];
+
+    function ambilData() {
+      const d = localStorage.getItem(KEY);
+      if (!d) {
+        localStorage.setItem(KEY, JSON.stringify(awal));
+        return [...awal];
+      }
+      return JSON.parse(d);
+    }
+
+    function simpanData(data) {
+      localStorage.setItem(KEY, JSON.stringify(data));
+    }
+
+    function setTab(nama) {
+      ["lapor", "lacak", "admin"].forEach((x) => {
+        document.getElementById("p-" + x).classList.toggle("hidden", x !== nama);
+        document.getElementById("t-" + x).classList.toggle("active", x === nama);
+      });
+      if (nama === "admin") renderAdmin();
+    }
+
+    function toggleAnon() {
+      const cek = document.getElementById("anonim").checked;
+      document.getElementById("identitas").classList.toggle("hidden", cek);
+      document.getElementById("nama").required = !cek;
+      document.getElementById("nim").required = !cek;
+    }
+
+    function badge(status) {
+      if (status === "Dalam Investigasi") return "badge b-proc";
+      if (status === "Selesai") return "badge b-done";
+      return "badge b-wait";
+    }
+
+    document.getElementById("formLapor").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const anon = document.getElementById("anonim").checked;
+      const tiket = "SC-" + Math.floor(10000 + Math.random() * 90000);
+      const data = ambilData();
+
+      data.unshift({
+        tiket,
+        pelapor: anon ? "Anonim" : `${document.getElementById("nama").value} (${document.getElementById("nim").value})`,
+        kontak: document.getElementById("kontak").value.trim() || "Tidak dilampirkan",
+        kategori: document.getElementById("kategori").value,
+        tanggal: document.getElementById("tanggal").value,
+        lokasi: document.getElementById("lokasi").value,
+        kronologi: document.getElementById("kronologi").value,
+        status: "Menunggu Verifikasi"
+      });
+
+      simpanData(data);
+      const box = document.getElementById("hasilKirim");
+      box.classList.remove("hidden");
+      box.innerHTML = `
+        <strong>Laporan Berhasil Terkirim!</strong><br>
+        <span style="font-size:0.85rem;">Simpan kode tiket ini untuk melacak perkembangan laporan:</span><br>
+        <div class="ticket-pill">${tiket}</div><br>
+        <span style="font-size:0.8rem;">Hotline Konseling Satgas: <b>0811-2233-4455</b></span>
+      `;
+      this.reset();
+      toggleAnon();
+    });
+
+    function cari() {
+      const kode = document.getElementById("cariTiket").value.trim().toUpperCase();
+      const item = ambilData().find((r) => r.tiket === kode);
+      const box = document.getElementById("hasilCari");
+      box.classList.remove("hidden");
+
+      if (!item) {
+        box.innerHTML = `<span style="color:#be123c; font-weight:600;">Tiket <b>${kode || "-"}</b> tidak ditemukan.</span>`;
+        return;
+      }
+
+      box.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:8px;">
+          <strong style="font-family:ui-monospace, monospace; font-size:1rem;">${item.tiket}</strong>
+          <span class="${badge(item.status)}">${item.status}</span>
+        </div>
+        <p style="font-size:0.88rem;"><strong>Kategori:</strong> ${item.kategori}</p>
+        <p style="font-size:0.88rem;"><strong>Tanggal:</strong> ${item.tanggal}</p>
+        <p style="font-size:0.88rem;"><strong>Lokasi:</strong> ${item.lokasi}</p>
+      `;
+    }
+
+    function renderAdmin() {
+      const data = ambilData();
+      const wrap = document.getElementById("daftarAdmin");
+      wrap.innerHTML = data.map((r, i) => `
+        <div class="box">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+            <strong>${r.tiket} • ${r.kategori}</strong>
+            <select onchange="ubahStatus(${i}, this.value)" style="width:auto; padding:6px 10px; font-size:0.82rem;">
+              <option ${r.status === "Menunggu Verifikasi" ? "selected" : ""}>Menunggu Verifikasi</option>
+              <option ${r.status === "Dalam Investigasi" ? "selected" : ""}>Dalam Investigasi</option>
+              <option ${r.status === "Selesai" ? "selected" : ""}>Selesai</option>
+            </select>
+          </div>
+          <p style="font-size:0.82rem; color:var(--muted); margin:6px 0;">
+            Pelapor: ${r.pelapor} • Kontak: ${r.kontak} • ${r.tanggal} • ${r.lokasi}
+          </p>
+          <p style="font-size:0.9rem; background:#fff; padding:10px 12px; border-radius:10px; border:1px solid var(--border);">${r.kronologi}</p>
+        </div>
+      `).join("");
+    }
+
+    function ubahStatus(i, val) {
+      const data = ambilData();
+      data[i].status = val;
+      simpanData(data);
+    }
+  </script>
+</body>
+</html>
+'@ | Set-Content -Path "index.html" -Encoding UTF8
+start index.html
